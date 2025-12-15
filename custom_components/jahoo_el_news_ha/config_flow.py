@@ -11,20 +11,19 @@ from homeassistant.data_entry_flow import FlowResult
 from .const import (
     DOMAIN, 
     CONF_URL, 
+    CONF_NAME,
     CONF_SCAN_INTERVAL, 
     CONF_LIMIT, 
-    CONF_ROTATE_INTERVAL,
     DEFAULT_SCAN_INTERVAL,
-    DEFAULT_LIMIT,
-    DEFAULT_ROTATE_INTERVAL
+    DEFAULT_LIMIT
 )
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
+        vol.Required(CONF_NAME): str,
         vol.Required(CONF_URL, default="https://www.newsit.gr/feed/"): str,
         vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): int,
         vol.Optional(CONF_LIMIT, default=DEFAULT_LIMIT): int,
-        vol.Optional(CONF_ROTATE_INTERVAL, default=DEFAULT_ROTATE_INTERVAL): int,
     }
 )
 
@@ -37,9 +36,15 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         """Handle the initial step."""
-        if user_input is None:
-            return self.async_show_form(
-                step_id="user", data_schema=STEP_USER_DATA_SCHEMA
-            )
+        errors = {}
+        if user_input is not None:
+            # Use the Name as unique ID base or just allow duplicates with different IDs
+            # Here we set unique_id to the Name provided to prevent duplicates of the exact same feed name
+            await self.async_set_unique_id(user_input[CONF_NAME])
+            self._abort_if_unique_id_configured()
 
-        return self.async_create_entry(title="Jahoo EL news HA", data=user_input)
+            return self.async_create_entry(title=user_input[CONF_NAME], data=user_input)
+
+        return self.async_show_form(
+            step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
+        )

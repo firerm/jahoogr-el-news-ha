@@ -2,15 +2,15 @@ type: vertical-stack
 cards:
   - type: markdown
     content: >
-      {% if state_attr('sensor.jahoo_el_news_ha_rss', 'image_url') %}
-      <a href="{{ state_attr('sensor.jahoo_el_news_ha_rss', 'link') }}" target="_blank"><img src="{{ state_attr('sensor.jahoo_el_news_ha_rss', 'image_url') }}" width="100%"/></a>
+      {% if state_attr('sensor.jahoo_el_news_ha_news', 'image_url') %}
+      <a href="{{ state_attr('sensor.jahoo_el_news_ha_news', 'link') }}" target="_blank"><img src="{{ state_attr('sensor.jahoo_el_news_ha_news', 'image_url') }}" width="100%"/></a>
       {% endif %}
 
-      <h3><a href="{{ state_attr('sensor.jahoo_el_news_ha_rss', 'link') }}" target="_blank" style="text-decoration: none; color: inherit;">{{ states('sensor.jahoo_el_news_ha_rss') }}</a></h3>
+      <h3><a href="{{ state_attr('sensor.jahoo_el_news_ha_news', 'link') }}" target="_blank" style="text-decoration: none; color: inherit;">{{ states('sensor.jahoo_el_news_ha_news') }}</a></h3>
 
-      {{ state_attr('sensor.jahoo_el_news_ha_rss', 'description') }}
+      {{ state_attr('sensor.jahoo_el_news_ha_news', 'description') }}
 
-      <small>News {{ state_attr('sensor.jahoo_el_news_ha_rss', 'article_index') }} / {{ state_attr('sensor.jahoo_el_news_ha_rss', 'total_articles') }}</small>
+      <small>News {{ state_attr('sensor.jahoo_el_news_ha_news', 'article_index') }} / {{ state_attr('sensor.jahoo_el_news_ha_news', 'total_articles') }}</small>
   - type: horizontal-stack
     cards:
       - type: button
