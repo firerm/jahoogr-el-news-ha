@@ -8,12 +8,23 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResult
 
-from .const import DOMAIN, CONF_URL, CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
+from .const import (
+    DOMAIN, 
+    CONF_URL, 
+    CONF_SCAN_INTERVAL, 
+    CONF_LIMIT, 
+    CONF_ROTATE_INTERVAL,
+    DEFAULT_SCAN_INTERVAL,
+    DEFAULT_LIMIT,
+    DEFAULT_ROTATE_INTERVAL
+)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_URL, default="https://www.newsit.gr/feed/"): str,
         vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): int,
+        vol.Optional(CONF_LIMIT, default=DEFAULT_LIMIT): int,
+        vol.Optional(CONF_ROTATE_INTERVAL, default=DEFAULT_ROTATE_INTERVAL): int,
     }
 )
 

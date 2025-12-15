@@ -1,9 +1,27 @@
-type: markdown
-content: >-
-  ## {{ states('sensor.jahoo_el_news_ha_sensor') }}
+type: vertical-stack
+cards:
+  - type: markdown
+    content: >
+      {% if state_attr('sensor.jahoo_el_news_ha_rss', 'image_url') %}
+      <img src="{{ state_attr('sensor.jahoo_el_news_ha_rss', 'image_url') }}" width="100%"/>
+      {% endif %}
 
-  <img src="{{ state_attr('sensor.jahoo_el_news_ha_sensor', 'image_url') }}" width="100%"/>
+      ### {{ states('sensor.jahoo_el_news_ha_rss') }}
 
-  {{ state_attr('sensor.jahoo_el_news_ha_sensor', 'description') }}
+      {{ state_attr('sensor.jahoo_el_news_ha_rss', 'description') }}
 
-  [Read More]({{ state_attr('sensor.jahoo_el_news_ha_sensor', 'link') }})
+      [Διαβάστε περισσότερα]({{ state_attr('sensor.jahoo_el_news_ha_rss', 'link') }})
+
+      <small>News {{ state_attr('sensor.jahoo_el_news_ha_rss', 'article_index') }} / {{ state_attr('sensor.jahoo_el_news_ha_rss', 'total_articles') }}</small>
+  - type: horizontal-stack
+    cards:
+      - type: button
+        entity: button.jahoo_el_news_ha_previous
+        icon: mdi:arrow-left
+        show_name: false
+        icon_height: 30px
+      - type: button
+        entity: button.jahoo_el_news_ha_next
+        icon: mdi:arrow-right
+        show_name: false
+        icon_height: 30px
