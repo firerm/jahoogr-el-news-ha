@@ -92,4 +92,3 @@ cards:
           service: button.press
           target:
             entity_id: button.jahoo_el_news_ha_next
-
