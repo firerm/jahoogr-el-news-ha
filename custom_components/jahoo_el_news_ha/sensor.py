@@ -73,7 +73,8 @@ class RssSensor(CoordinatorEntity, SensorEntity):
         
         # 2. If no image found yet, try extracting from HTML description
         if not image_url:
-            img_match = re.search(r'<img[^>]+src=["']([^"']+)["']', raw_description)
+            # Use triple quotes to avoid escaping issues with single/double quotes in Python string
+            img_match = re.search(r'''<img[^>]+src=["']([^"']+)["']''', raw_description)
             if img_match:
                 image_url = img_match.group(1)
 
