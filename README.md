@@ -92,3 +92,14 @@ cards:
           service: button.press
           target:
             entity_id: button.jahoo_el_news_ha_next
+```
+<div align="center">
+
+[![HACS Custom](https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge)](https://github.com/hacs/integration)
+[![GitHub stars](https://img.shields.io/github/stars/firerm/jahoogr-el-news-ha?style=for-the-badge)](https://github.com/firerm/jahoogr-el-news-ha/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/firerm/jahoogr-el-news-ha?style=for-the-badge)](https://github.com/firerm/jahoogr-el-news-ha/issues)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=for-the-badge)](https://github.com/firerm/jahoogr-el-news-ha/graphs/commit-activity)
+
+</div>
+
+<a href="https://jahoo.gr" target="_blank">Visit jahoo.gr</a>
