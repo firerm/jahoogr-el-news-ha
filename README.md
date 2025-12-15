@@ -4,11 +4,11 @@
 [![version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
 [![maintainer](https://img.shields.io/badge/maintainer-firerm-green.svg)]()
 
-A lightweight and efficient Home Assistant integration that fetches the latest news headlines from **Yahoo.gr** via RSS feed. It displays news in a sleek, rotating card format directly on your dashboard, keeping you updated with what's happening in Greece and the world.
+A lightweight and efficient Home Assistant integration that fetches the latest news headlines from **Every Site** has RSS feed. It displays news in a sleek, rotating card format directly on your dashboard, keeping you updated with what's happening in Greece( you can change that) and all over the world.
 
 ## ✨ Key Features
 
-* **📰 Live RSS Feed:** Automatically fetches the latest news from Yahoo.gr.
+* **📰 Live RSS Feed:** Automatically fetches the latest news from Every Site. ( default every 15 minutes)
 * **🔄 Auto-Rotation:** News cards rotate automatically based on your preferred interval.
 * **🎛️ Fully Customizable:**
     * Set the **rotation speed** (in seconds).
@@ -27,9 +27,9 @@ This integration is available via **HACS** (Home Assistant Community Store) as a
 1.  Open your Home Assistant instance and navigate to **HACS**.
 2.  Click on **Integrations**.
 3.  In the top right corner, click the three dots (**⋮**) and select **Custom repositories**.
-4.  Paste the following URL into the **Repository** field:
+4.  Paste the following URL into the HACS **Repository** field:
     ```text
-    [https://github.com/firerm/jahoogr-el-news-ha/](https://github.com/firerm/jahoogr-el-news-ha/)
+    https://github.com/firerm/jahoogr-el-news-ha
     ```
 5.  In the **Category** dropdown, select **Integration**.
 6.  Click **Add**.
@@ -43,7 +43,7 @@ This integration is available via **HACS** (Home Assistant Community Store) as a
 After installation, you can configure the integration directly via the Home Assistant UI:
 
 1.  Go to **Settings** > **Devices & Services**.
-2.  Click **Add Integration** and search for **Yahoo.gr Greek News**.
+2.  Click **Add Integration** and search for **Jahoo EL news HA**.
 3.  Follow the on-screen instructions to set your preferences:
     * **Rotation Interval:** (e.g., 10 seconds)
     * **Feed Refresh Rate:** (e.g., 30 minutes)
@@ -54,7 +54,42 @@ After installation, you can configure the integration directly via the Home Assi
 ## 🖼️ Dashboard Setup
 
 To display the news on your dashboard, simply add the custom card provided by the integration.
+That's it ! enjoy!
 
 ```yaml
-type: custom:jahoogr-news-card
-entity: sensor.jahoogr_news  # Example entity ID
+type: vertical-stack
+cards:
+  - type: markdown
+    content: >
+      {% if state_attr('sensor.jahoo_el_news_ha_rss', 'image_url') %}
+      <a href="{{ state_attr('sensor.jahoo_el_news_ha_rss', 'link') }}" target="_blank"><img src="{{ state_attr('sensor.jahoo_el_news_ha_rss', 'image_url') }}" width="100%"/></a>
+      {% endif %}
+
+      <h3><a href="{{ state_attr('sensor.jahoo_el_news_ha_rss', 'link') }}" target="_blank" style="text-decoration: none; color: inherit;">{{ states('sensor.jahoo_el_news_ha_rss') }}</a></h3>
+
+      {{ state_attr('sensor.jahoo_el_news_ha_rss', 'description') }}
+
+      <small>News {{ state_attr('sensor.jahoo_el_news_ha_rss', 'article_index') }} / {{ state_attr('sensor.jahoo_el_news_ha_rss', 'total_articles') }}</small>
+  - type: horizontal-stack
+    cards:
+      - type: button
+        entity: button.jahoo_el_news_ha_previous
+        icon: mdi:arrow-left
+        show_name: false
+        icon_height: 30px
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.jahoo_el_news_ha_previous
+      - type: button
+        entity: button.jahoo_el_news_ha_next
+        icon: mdi:arrow-right
+        show_name: false
+        icon_height: 30px
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.jahoo_el_news_ha_next
+
