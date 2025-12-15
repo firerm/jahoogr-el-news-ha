@@ -1,6 +1,7 @@
 """Support for Jahoo EL news HA RSS feed."""
 from __future__ import annotations
 
+import re
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -54,10 +55,25 @@ class RssSensor(CoordinatorEntity, SensorEntity):
         entry = self.coordinator.data
         if not entry:
             return {}
+        
+        # Clean up description (remove HTML tags)
+        raw_description = entry.get('summary', '')
+        clean_description = re.sub('<[^<]+?>', '', raw_description)
+        
+        # Remove common boilerplate text (especially for Greek RSS feeds)
+        # Splits at "The article" or "Το άρθρο" and takes the first part
+        clean_description = clean_description.split("Το άρθρο")[0]
+        clean_description = clean_description.split("The article")[0]
+        
+        # Remove [Read more] style links if they persist as text
+        clean_description = clean_description.replace("[Διαβάστε περισσότερα]", "")
+        clean_description = clean_description.replace("[Read more]", "")
+        
+        clean_description = clean_description.strip()
 
         attrs = {
             'full_title': entry.get('title', ''),
-            'description': entry.get('summary', ''),
+            'description': clean_description,
             'link': entry.get('link', ''),
             'published': entry.get('published', ''),
             'article_index': self.coordinator.current_index + 1,
