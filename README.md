@@ -102,4 +102,7 @@ cards:
 
 </div>
 
-<a href="https://jahoo.gr" target="_blank">Visit jahoo.gr</a>
+---
+<div align="center">
+  <p>Created by <b>Tassos S. Manolis</b> | Powered by <a href="https://jahoo.gr" target="_blank"><b>jahoo.gr</b></a></p>
+</div>
