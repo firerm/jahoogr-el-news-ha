@@ -1,0 +1,5 @@
+{
+  "name": "Jahoo EL news HA",
+  "description": "ένα εργαλείο που επιτρέπει να φτιάξετε RSS στο Dashboard του home assistant \nαπό τον Tassos Manolis\njahoo.gr",
+  "requestFramePermissions": []
+}
