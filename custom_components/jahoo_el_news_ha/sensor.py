@@ -56,12 +56,31 @@ class RssSensor(CoordinatorEntity, SensorEntity):
         if not entry:
             return {}
         
-        # Clean up description (remove HTML tags)
-        raw_description = entry.get('summary', '')
+        # Get raw description first
+        raw_description = entry.get('summary', '') or entry.get('description', '')
+        
+        # 1. Try to find Image in standard locations
+        image_url = None
+        if 'media_content' in entry and entry['media_content']:
+            image_url = entry['media_content'][0].get('url')
+        elif 'enclosures' in entry and entry['enclosures']:
+            image_url = entry['enclosures'][0].get('href')
+        elif 'links' in entry:
+             for link in entry['links']:
+                if 'image' in link.get('type', ''):
+                    image_url = link.get('href')
+                    break
+        
+        # 2. If no image found yet, try extracting from HTML description
+        if not image_url:
+            img_match = re.search(r'<img[^>]+src=["']([^"']+)["']', raw_description)
+            if img_match:
+                image_url = img_match.group(1)
+
+        # 3. Clean up description (remove HTML tags)
         clean_description = re.sub('<[^<]+?>', '', raw_description)
         
         # Remove common boilerplate text (especially for Greek RSS feeds)
-        # Splits at "The article" or "Το άρθρο" and takes the first part
         clean_description = clean_description.split("Το άρθρο")[0]
         clean_description = clean_description.split("The article")[0]
         
@@ -78,21 +97,9 @@ class RssSensor(CoordinatorEntity, SensorEntity):
             'published': entry.get('published', ''),
             'article_index': self.coordinator.current_index + 1,
             'total_articles': len(self.coordinator.feed_entries),
+            'image_url': image_url
         }
 
-        # Find Image
-        image_url = None
-        if 'media_content' in entry and entry['media_content']:
-            image_url = entry['media_content'][0].get('url')
-        elif 'enclosures' in entry and entry['enclosures']:
-            image_url = entry['enclosures'][0].get('href')
-        elif 'links' in entry:
-             for link in entry['links']:
-                if 'image' in link.get('type', ''):
-                    image_url = link.get('href')
-                    break
-        
-        attrs['image_url'] = image_url
         return attrs
 
     @property
