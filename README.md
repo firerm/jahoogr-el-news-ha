@@ -51,7 +51,7 @@ After installation, you can configure the integration directly via the Home Assi
 
 ---
 
-## 🖼️ Dashboard Setup
+## 🖼️ Dashboard Setup ( ONLY FOR VERSION 1.2.2 )
 
 To display the news on your dashboard, simply add the custom card provided by the integration.
 That's it ! enjoy!
