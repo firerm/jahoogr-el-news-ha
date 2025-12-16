@@ -6,18 +6,22 @@
 
 A lightweight and efficient Home Assistant integration that fetches the latest news headlines from **Every Site** has RSS feed. It displays news in a sleek, rotating card format directly on your dashboard, keeping you updated with what's happening in Greece( you can change that) and all over the world.
 
-## ✨ Key Features
+![Logo](logo2026.png)
+
+
+✨ Key Features
 
 * **📰 Live RSS Feed:** Automatically fetches the latest news from Every Site. ( default every 15 minutes)
 * **🔄 Auto-Rotation:** News cards rotate automatically based on your preferred interval.
 * **🎛️ Fully Customizable:**
-    * Set the **rotation speed** (in seconds).
+    * Set the **rotation speed** (in seconds). ( removed in version 1.3.0 )
     * Choose the **number of headlines** to display in the loop.
     * Define the **feed refresh interval** (how often to check for new stories).
 * **navigation:** Built-in **Next** and **Previous** buttons for manual browsing.
 * **🚀 Lightweight & Fast:** Optimized performance with minimal resource usage.
 * **📱 Dashboard Ready:** Easy to add to any Lovelace view.
 
+![Logo](Screen1.jpg)
 ---
 
 ## 📥 Installation via HACS
@@ -45,13 +49,13 @@ After installation, you can configure the integration directly via the Home Assi
 1.  Go to **Settings** > **Devices & Services**.
 2.  Click **Add Integration** and search for **Jahoo EL news HA**.
 3.  Follow the on-screen instructions to set your preferences:
-    * **Rotation Interval:** (e.g., 10 seconds)
     * **Feed Refresh Rate:** (e.g., 30 minutes)
     * **Max Cards:** Number of news items to rotate.
+  ![Logo](Screen2.jpg)
 
 ---
 
-## 🖼️ Dashboard Setup
+## 🖼️ Dashboard Setup ( ONLY FOR VERSION 1.2.2 )
 
 To display the news on your dashboard, simply add the custom card provided by the integration.
 That's it ! enjoy!
@@ -91,6 +95,63 @@ cards:
           action: call-service
           service: button.press
           target:
+            entity_id: button.jahoo_el_news_ha_next
+```
+
+
+## NEW!! 📋 Dashboard Configuration (YAML) 1.3.0 Version
+
+> [!IMPORTANT]
+> **CONFIGURATION REQUIRED FOR v1.3.0+**
+>
+> Since version 1.3.0 allows you to set **Custom Feed Names**, the entity IDs shown in the code below (e.g., `sensor.jahoo_el_news_ha_news`) are **placeholders**.
+>
+> You **MUST replace** them with the specific Entity IDs generated for your feed based on the name you chose during setup.
+> * Replace `sensor.jahoo_el_news_ha_news` with your actual sensor ID.
+> * Replace `button.jahoo_el_news_ha_previous` & `next` with your actual button IDs.
+
+```yaml
+type: vertical-stack
+cards:
+  - type: markdown
+    content: >
+      # ----------------------------------------------------------------------
+      # IMPORTANT: Replace 'sensor.jahoo_el_news_ha_news' with YOUR sensor ID
+      # ----------------------------------------------------------------------
+      {% if state_attr('sensor.jahoo_el_news_ha_news', 'image_url') %}
+      <a href="{{ state_attr('sensor.jahoo_el_news_ha_news', 'link') }}" target="_blank"><img src="{{ state_attr('sensor.jahoo_el_news_ha_news', 'image_url') }}" width="100%"/></a>
+      {% endif %}
+
+      <h3><a href="{{ state_attr('sensor.jahoo_el_news_ha_news', 'link') }}" target="_blank" style="text-decoration: none; color: inherit;">{{ states('sensor.jahoo_el_news_ha_news') }}</a></h3>
+
+      {{ state_attr('sensor.jahoo_el_news_ha_news', 'description') }}
+
+      <small>News {{ state_attr('sensor.jahoo_el_news_ha_news', 'article_index') }} / {{ state_attr('sensor.jahoo_el_news_ha_news', 'total_articles') }}</small>
+  - type: horizontal-stack
+    cards:
+      - type: button
+        # REPLACE THE ENTITY BELOW with your actual 'previous' button ID
+        entity: button.jahoo_el_news_ha_previous
+        icon: mdi:arrow-left
+        show_name: false
+        icon_height: 30px
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            # Don't forget to update the target entity here too!
+            entity_id: button.jahoo_el_news_ha_previous
+      - type: button
+        # REPLACE THE ENTITY BELOW with your actual 'next' button ID
+        entity: button.jahoo_el_news_ha_next
+        icon: mdi:arrow-right
+        show_name: false
+        icon_height: 30px
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            # Don't forget to update the target entity here too!
             entity_id: button.jahoo_el_news_ha_next
 ```
 <div align="center">
