@@ -4,14 +4,16 @@
 [![version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
 [![maintainer](https://img.shields.io/badge/maintainer-firerm-green.svg)]()
 
-A lightweight and efficient Home Assistant integration that fetches the latest news headlines from **Every Site** has RSS feed. It displays news in a sleek, rotating card format directly on your dashboard, keeping you updated with what's happening in Greece( you can change that) and all over the world.
 
-## ✨ Key Features
+A lightweight and efficient Home Assistant integration that fetches the latest news headlines from **Every Site** has RSS feed. It displays news in a sleek, rotating card format directly on your dashboard, keeping you updated with what's happening in Greece( you can change that) and all over the world.
+![Logo](logo2026.png)##
+
+✨ Key Features
 
 * **📰 Live RSS Feed:** Automatically fetches the latest news from Every Site. ( default every 15 minutes)
 * **🔄 Auto-Rotation:** News cards rotate automatically based on your preferred interval.
 * **🎛️ Fully Customizable:**
-    * Set the **rotation speed** (in seconds).
+    * Set the **rotation speed** (in seconds). ( removed in version 1.3.0 )
     * Choose the **number of headlines** to display in the loop.
     * Define the **feed refresh interval** (how often to check for new stories).
 * **navigation:** Built-in **Next** and **Previous** buttons for manual browsing.
