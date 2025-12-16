@@ -9,7 +9,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.helpers.entity import DeviceInfo
 
-from .const import DOMAIN
+from .const import DOMAIN, DEFAULT_ICON_URL
 from .coordinator import RssCoordinator
 
 async def async_setup_entry(
@@ -23,7 +23,7 @@ async def async_setup_entry(
 
 
 class RssSensor(CoordinatorEntity, SensorEntity):
-    """Representation of a RSS sensor that rotates through articles."""
+    """Representation of a RSS sensor."""
     
     _attr_has_entity_name = True
     _attr_icon = "mdi:rss"
@@ -33,12 +33,13 @@ class RssSensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self._entry = entry
         self._attr_unique_id = f"{entry.entry_id}_rss"
-        self._attr_name = "News" # The entity will be named: Device Name + News (e.g., CNN News)
+        self._attr_name = "News"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
-            name=entry.title, # Uses the Name provided in Config Flow (e.g., "CNN", "Sport24")
+            name=entry.title,
             manufacturer="Jahoo HA Generator",
             model="RSS Reader",
+            configuration_url=coordinator.url,
         )
 
     @property
@@ -56,52 +57,46 @@ class RssSensor(CoordinatorEntity, SensorEntity):
         if not entry:
             return {}
         
-        # Get raw description first
-        raw_description = entry.get('summary', '') or entry.get('description', '')
-        
-        # 1. Try to find Image in standard locations
+        # Helper to strip HTML
+        def clean_html(raw_html):
+            if not raw_html: return ""
+            clean = re.sub('<[^<]+?>', '', raw_html)
+            # Remove common boilerplate
+            clean = clean.split("Το άρθρο")[0].split("The article")[0]
+            clean = clean.replace("[Διαβάστε περισσότερα]", "").replace("[Read more]", "")
+            return clean.strip()
+
+        # Extract Description
+        raw_desc = entry.get('summary', '') or entry.get('description', '')
+        description = clean_html(raw_desc)
+
+        # Extract Image
         image_url = None
+        
+        # 1. Structured media
         if 'media_content' in entry and entry['media_content']:
             image_url = entry['media_content'][0].get('url')
         elif 'enclosures' in entry and entry['enclosures']:
             image_url = entry['enclosures'][0].get('href')
-        elif 'links' in entry:
-             for link in entry['links']:
-                if 'image' in link.get('type', ''):
-                    image_url = link.get('href')
-                    break
         
-        # 2. If no image found yet, try extracting from HTML description
+        # 2. Regex fallbacks for IMG tags in description
         if not image_url:
-            # Use triple quotes to avoid escaping issues with single/double quotes in Python string
-            img_match = re.search(r'''<img[^>]+src=["']([^"']+)["']''', raw_description)
+            img_match = re.search(r'''<img[^>]+src=["']([^"']+)["']''', raw_desc)
             if img_match:
                 image_url = img_match.group(1)
 
-        # 3. Clean up description (remove HTML tags)
-        clean_description = re.sub('<[^<]+?>', '', raw_description)
-        
-        # Remove common boilerplate text (especially for Greek RSS feeds)
-        clean_description = clean_description.split("Το άρθρο")[0]
-        clean_description = clean_description.split("The article")[0]
-        
-        # Remove [Read more] style links if they persist as text
-        clean_description = clean_description.replace("[Διαβάστε περισσότερα]", "")
-        clean_description = clean_description.replace("[Read more]", "")
-        
-        clean_description = clean_description.strip()
+        # Fallback to the GitHub logo if no image found in article
+        final_image_url = image_url if image_url else DEFAULT_ICON_URL
 
-        attrs = {
+        return {
             'full_title': entry.get('title', ''),
-            'description': clean_description,
+            'description': description,
             'link': entry.get('link', ''),
             'published': entry.get('published', ''),
             'article_index': self.coordinator.current_index + 1,
             'total_articles': len(self.coordinator.feed_entries),
-            'image_url': image_url
+            'image_url': final_image_url
         }
-
-        return attrs
 
     @property
     def entity_picture(self) -> str | None:

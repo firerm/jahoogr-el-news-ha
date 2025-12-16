@@ -1,0 +1,24 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Ρύθμιση Jahoo EL news HA",
+        "description": "Ρυθμίστε τις παραμέτρους του RSS feed.",
+        "data": {
+          "name": "Όνομα Integration",
+          "url": "RSS URL",
+          "scan_interval": "Διάστημα Ανανέωσης (λεπτά)",
+          "limit": "Αριθμός Άρθρων"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Αποτυχία σύνδεσης",
+      "invalid_auth": "Μη έγκυρη πιστοποίηση",
+      "unknown": "Απρόσμενο σφάλμα"
+    },
+    "abort": {
+      "already_configured": "Η συσκευή έχει ήδη ρυθμιστεί"
+    }
+  }
+}

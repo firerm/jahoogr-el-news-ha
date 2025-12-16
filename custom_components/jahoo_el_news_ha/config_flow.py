@@ -38,8 +38,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the initial step."""
         errors = {}
         if user_input is not None:
-            # Use the Name as unique ID base or just allow duplicates with different IDs
-            # Here we set unique_id to the Name provided to prevent duplicates of the exact same feed name
             await self.async_set_unique_id(user_input[CONF_NAME])
             self._abort_if_unique_id_configured()
 

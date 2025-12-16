@@ -41,6 +41,7 @@ class RssNavButton(CoordinatorEntity, ButtonEntity):
             name=entry.title,
             manufacturer="Jahoo HA Generator",
             model="RSS Reader",
+            configuration_url=coordinator.url,
         )
 
     async def async_press(self) -> None:
