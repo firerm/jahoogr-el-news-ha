@@ -6,7 +6,7 @@
 
 A lightweight and efficient Home Assistant integration that fetches the latest news headlines from **Every Site** has RSS feed. It displays news in a sleek, rotating card format directly on your dashboard, keeping you updated with what's happening in Greece( you can change that) and all over the world.
 
-![Logo](logo2026.jpg)
+![Logo](logo2026.png)
 
 
 ✨ Key Features
@@ -21,7 +21,7 @@ A lightweight and efficient Home Assistant integration that fetches the latest n
 * **🚀 Lightweight & Fast:** Optimized performance with minimal resource usage.
 * **📱 Dashboard Ready:** Easy to add to any Lovelace view.
 
-![Logo](Screen1.png)
+![Logo](Screen1.jpg)
 ---
 
 ## 📥 Installation via HACS
