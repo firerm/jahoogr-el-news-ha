@@ -49,9 +49,9 @@ After installation, you can configure the integration directly via the Home Assi
 1.  Go to **Settings** > **Devices & Services**.
 2.  Click **Add Integration** and search for **Jahoo EL news HA**.
 3.  Follow the on-screen instructions to set your preferences:
-    * **Rotation Interval:** (e.g., 10 seconds) ++++ removed!++++
     * **Feed Refresh Rate:** (e.g., 30 minutes)
     * **Max Cards:** Number of news items to rotate.
+  ![Logo](Screen2.jpg)
 
 ---
 
