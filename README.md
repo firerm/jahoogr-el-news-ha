@@ -1,7 +1,7 @@
 # Jahoo.gr Greek News ( or your language ) for Home Assistant 🇬🇷
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
-[![version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
+[![version](https://img.shields.io/badge/version-2.0.0-blue.svg)]()
 [![maintainer](https://img.shields.io/badge/maintainer-firerm-green.svg)]()
 
 A lightweight and efficient Home Assistant integration that fetches the latest news headlines from **Every Site** has RSS feed. It displays news in a sleek, rotating card format directly on your dashboard, keeping you updated with what's happening in Greece( you can change that) and all over the world.
@@ -23,8 +23,13 @@ A lightweight and efficient Home Assistant integration that fetches the latest n
 
 ![Logo](Screen1.jpg)
 ---
+## 📦 Installation via HACS (Automatic)
 
-## 📥 Installation via HACS
+The easiest way to install this integration is via HACS. Click the button below to open HACS directly on your Home Assistant instance and download the repository:
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=firerm&repository=jahoogr-el-news-ha&category=integration)
+
+## 📥 Installation via HACS (Manual)
 
 This integration is available via **HACS** (Home Assistant Community Store) as a custom repository.
 
