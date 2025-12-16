@@ -1,7 +1,7 @@
 # Jahoo.gr Greek News ( or your language ) for Home Assistant 🇬🇷
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
-[![version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
+[![version](https://img.shields.io/badge/version-2.0.0-blue.svg)]()
 [![maintainer](https://img.shields.io/badge/maintainer-firerm-green.svg)]()
 
 A lightweight and efficient Home Assistant integration that fetches the latest news headlines from **Every Site** has RSS feed. It displays news in a sleek, rotating card format directly on your dashboard, keeping you updated with what's happening in Greece( you can change that) and all over the world.
