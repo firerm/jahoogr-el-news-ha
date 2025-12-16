@@ -23,8 +23,13 @@ A lightweight and efficient Home Assistant integration that fetches the latest n
 
 ![Logo](Screen1.jpg)
 ---
+## 📦 Installation via HACS (Automatic)
 
-## 📥 Installation via HACS
+The easiest way to install this integration is via HACS. Click the button below to open HACS directly on your Home Assistant instance and download the repository:
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=firerm&repository=jahoogr-el-news-ha&category=integration)
+
+## 📥 Installation via HACS (Manual)
 
 This integration is available via **HACS** (Home Assistant Community Store) as a custom repository.
 
