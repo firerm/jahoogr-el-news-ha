@@ -4,9 +4,9 @@
   "codeowners": [],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/firerm/jahoogr-el-news-ha/blob/main/README.md",
+  "documentation": "https://github.com/generic/readme",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/firerm/jahoogr-el-news-ha/issues",
+  "issue_tracker": "https://github.com/generic/issues",
   "requirements": [
     "feedparser>=6.0.0"
   ],

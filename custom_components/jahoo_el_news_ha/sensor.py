@@ -69,6 +69,15 @@ class RssSensor(CoordinatorEntity, SensorEntity):
         # Extract Description
         raw_desc = entry.get('summary', '') or entry.get('description', '')
         description = clean_html(raw_desc)
+        
+        # Truncate to 100 characters
+        if len(description) > 100:
+            description = description[:100] + "..."
+            
+        # Add "more" link
+        article_link = entry.get('link', '')
+        if article_link:
+             description += f" <a href='{article_link}'>more</a>"
 
         # Extract Image
         image_url = None
@@ -91,7 +100,7 @@ class RssSensor(CoordinatorEntity, SensorEntity):
         return {
             'full_title': entry.get('title', ''),
             'description': description,
-            'link': entry.get('link', ''),
+            'link': article_link,
             'published': entry.get('published', ''),
             'article_index': self.coordinator.current_index + 1,
             'total_articles': len(self.coordinator.feed_entries),
